@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LicenseManager.DataModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
@@ -17,7 +18,7 @@ namespace LicenseManager.Web
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new UserManager<IdentityUser>(new UserStore<IdentityUser>());
+            UserManagerFactory = () => new UserManager<ApplicationUser>(new UserStore<ApplicationUser>());
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
@@ -31,7 +32,7 @@ namespace LicenseManager.Web
 
         public static OAuthAuthorizationServerOptions OAuthOptions { get; private set; }
 
-        public static Func<UserManager<IdentityUser>> UserManagerFactory { get; set; }
+        public static Func<UserManager<ApplicationUser>> UserManagerFactory { get; set; }
 
         public static string PublicClientId { get; private set; }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using LicenseManager.DataModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -14,9 +15,9 @@ namespace LicenseManager.Web.Providers
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
-        private readonly Func<UserManager<IdentityUser>> _userManagerFactory;
+        private readonly Func<UserManager<ApplicationUser>> _userManagerFactory;
 
-        public ApplicationOAuthProvider(string publicClientId, Func<UserManager<IdentityUser>> userManagerFactory)
+        public ApplicationOAuthProvider(string publicClientId, Func<UserManager<ApplicationUser>> userManagerFactory)
         {
             if (publicClientId == null)
             {
@@ -34,9 +35,9 @@ namespace LicenseManager.Web.Providers
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            using (UserManager<IdentityUser> userManager = _userManagerFactory())
+            using (UserManager<ApplicationUser> userManager = _userManagerFactory())
             {
-                IdentityUser user = await userManager.FindAsync(context.UserName, context.Password);
+                ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
 
                 if (user == null)
                 {

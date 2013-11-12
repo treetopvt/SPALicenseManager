@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
 using System.Web.Http.ModelBinding;
+using LicenseManager.DataModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin.Security;
@@ -30,14 +31,14 @@ namespace LicenseManager.Web.Controllers
         {
         }
 
-        public AccountController(UserManager<IdentityUser> userManager,
+        public AccountController(UserManager<ApplicationUser> userManager,
             ISecureDataFormat<AuthenticationTicket> accessTokenFormat)
         {
             UserManager = userManager;
             AccessTokenFormat = accessTokenFormat;
         }
 
-        public UserManager<IdentityUser> UserManager { get; private set; }
+        public UserManager<ApplicationUser> UserManager { get; private set; }
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
         // GET api/Account/UserInfo
@@ -245,7 +246,7 @@ namespace LicenseManager.Web.Controllers
                 return new ChallengeResult(provider, this);
             }
 
-            IdentityUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
+            ApplicationUser user = await UserManager.FindAsync(new UserLoginInfo(externalLogin.LoginProvider,
                 externalLogin.ProviderKey));
 
             bool hasRegistered = user != null;
@@ -321,9 +322,11 @@ namespace LicenseManager.Web.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityUser user = new IdentityUser
+            ApplicationUser user = new ApplicationUser
             {
-                UserName = model.UserName
+                UserName = model.UserName,
+                FirstName = model.FirstName,
+                LastName = model.LastName
             };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
@@ -355,9 +358,12 @@ namespace LicenseManager.Web.Controllers
                 return InternalServerError();
             }
 
-            IdentityUser user = new IdentityUser
+            ApplicationUser user = new ApplicationUser()
             {
-                UserName = model.UserName
+                UserName = model.UserName,
+                FirstName = model.UserName,
+                LastName = model.UserName
+
             };
             user.Logins.Add(new IdentityUserLogin
             {

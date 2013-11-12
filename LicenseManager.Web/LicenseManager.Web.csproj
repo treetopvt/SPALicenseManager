@@ -375,6 +375,16 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\LicenseManager.DataAccess\LicenseManager.DataAccess.csproj">
+      <Project>{85505e1c-0ccc-483c-97c2-fe2b36d4827a}</Project>
+      <Name>LicenseManager.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LicenseManager.DataModel\LicenseManager.DataModel.csproj">
+      <Project>{7cc622fb-747a-4762-851f-b44db31e6d09}</Project>
+      <Name>LicenseManager.DataModel</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
