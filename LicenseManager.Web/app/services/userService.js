@@ -8,24 +8,30 @@
     // Inject the dependencies. 
     // Point to the factory definition function.
     // TODO: replace app with your module name
-    angular.module('app').factory(serviceId, ['$http', userService]);
+    angular.module('app').factory(serviceId, ['$http', '$cookieStore', userService]);
 
-    function userService($http) {
+    function userService($http, $cookieStore, config) {
         
         // Define the functions and properties to reveal.
         var service = {
-            isLoggedOn: false,
-            userName: '',
+            isLoggedOn: isLoggedOn,
             login: login,
             logoff:logoff,
             register: register,
             credential: credential,
-
+            isAuthorized:isAuthorized
         };
-
         var svc = this;
-        svc.accessToken = '';
-        svc.isLoggedOn = false;
+
+        var accessLevels = routingConfig.accessLevels;
+        var userRoles = routingConfig.userRoles;
+        var currentUser = $cookieStore.get('user') || { username: '', role: userRoles.public };
+
+        svc.accessLevels = accessLevels;
+        svc.userRoles = userRoles;
+        svc.currentUser = currentUser;
+        
+        //svc.accessToken = '';
 
         //@property {string} baseAdress - Base address for the api calls
         var baseAdress = "/api/account";
@@ -33,16 +39,29 @@
         return service;
         
 
-
-
         //#region Public Methods
+        
+        function isAuthorized(accessLevel, role) {
+            ///use current user role if none is passed in
+            if (role === undefined)
+                role = currentUser.role;
+
+            return accessLevel.bitMask & role.bitMask;
+        }
+        
+        function isLoggedOn(user) {
+            if (user === undefined)
+                user = currentUser;
+            return user.role.title == userRoles.user.title || user.role.title == userRoles.admin.title;
+        }
+
         function credential(username, password, rememberme) {
             this.userName = username;
             this.password = password;
             this.rememberMe = rememberme;
         }
 
-        function login(user) {
+        function login(user, success, error) {
 
             var data = {
                 grant_type: "password",
@@ -53,15 +72,17 @@
                 type: "POST",
                 data: data
             }).success(function (data, status, headers, config) {
-                if (data.success) {
-                    this.userName = data.userName;
+                if (data.userName !=null && data.access_token !=null) {
+                    //this.userName = data.userName;
+                    changeUser(data);
                     svc.isLoggedOn = true;
-                    svc.accessToken = data.access_Token;
+                    svc.accessToken = data.access_token;
+                    success(svc.currentUser);
                 } else {
                     //login failed
                     this.isLoggedOn = false;
                     this.userName = '';
-
+                    error({});
                 }
                 // data contains the response
                 // status is the HTTP status
@@ -71,6 +92,7 @@
                 //login failed
                 this.isLoggedOn = false;
                 this.userName = '';
+                error(data);
             });
             //$http({
             //    url: loginUrl,
@@ -109,6 +131,16 @@
   
         //#region Internal Methods        
 
+        function changeUser(user) {
+            _.extend(currentUser, user);
+        };
+        
+        function _getRoles(roleArrayString) {
+            var rtnArray = roleArrayString.split(',');
+
+            return rtnArray;
+
+        }
         //#endregion
     }
 })();

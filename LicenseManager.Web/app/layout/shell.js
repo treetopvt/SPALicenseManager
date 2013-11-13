@@ -3,9 +3,9 @@
     
     var controllerId = 'shell';
     angular.module('app').controller(controllerId,
-        ['$rootScope', 'common', 'config', shell]);
+        ['$rootScope', 'userService', 'common', 'config', shell]);
 
-    function shell($rootScope, common, config) {
+    function shell($rootScope,userService, common, config) {
         var vm = this;
         var logSuccess = common.logger.getLogFn(controllerId, 'success');
         var events = config.events;
@@ -32,7 +32,14 @@
         function toggleSpinner(on) { vm.isBusy = on; }
 
         $rootScope.$on('$routeChangeStart',
-            function (event, next, current) { toggleSpinner(true); }
+            function(event, next, current) {
+                toggleSpinner(true);
+                $rootScope.error = null;
+                if (!userService.isAuthorized(next.access)) {
+                    if (userService.isLoggedOn()) $location.path('/');
+                    else $location.path('/login');
+                }
+            }
         );
         
         $rootScope.$on(events.controllerActivateSuccess,

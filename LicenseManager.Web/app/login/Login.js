@@ -21,6 +21,7 @@
         //gets the common logger
         var getLogFn = common.logger.getLogFn;
         var log = getLogFn(controllerId);
+        var logError = getLogFn(controllerId, 'error');//error message
 
         vm.userName = "";
         vm.password = "";
@@ -40,15 +41,20 @@
         //#region Internal Methods        
         function submit() {
 
-            var user = {
+            userService.login({
                 userName: vm.userName,
-                password: vm.password
-            };
-            userService.login(user);
-            //authorize and redirect
-            var route = '/dashboard';
+                password: vm.password,
+                rememberMe: vm.rememberMe
+            }, 
+            function(success) {
+                //authorize and redirect
+                var route = '/dashboard';
+                $location.path(route); //location service that angular provides
 
-            $location.path(route); //location service that angular provides
+            },
+            function(error) {
+                logError('User was not Authorized', error);
+            });
 
         }
         function reset() {

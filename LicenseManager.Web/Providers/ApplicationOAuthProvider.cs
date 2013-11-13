@@ -37,8 +37,10 @@ namespace LicenseManager.Web.Providers
         {
             using (UserManager<ApplicationUser> userManager = _userManagerFactory())
             {
-                var tmp = userManager.FindByName("User1");
-                var t2 = userManager.GetLogins(tmp.UserName);
+                //var tmp = userManager.FindByName("User1");
+                //var t2 = userManager.GetLogins(tmp.UserName);
+                userManager.Create(new ApplicationUser() {UserName = "Admin", FirstName="Admin", LastName="User"},"2Bornot2B");
+
                 ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
 
                 if (user == null)
@@ -51,7 +53,8 @@ namespace LicenseManager.Web.Providers
                     context.Options.AuthenticationType);
                 ClaimsIdentity cookiesIdentity = await userManager.CreateIdentityAsync(user,
                     CookieAuthenticationDefaults.AuthenticationType);
-                AuthenticationProperties properties = CreateProperties(user.UserName);
+                
+                AuthenticationProperties properties = CreateProperties(user.UserName, user.Roles);
                 AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
                 context.Validated(ticket);
                 context.Request.Context.Authentication.SignIn(cookiesIdentity);
@@ -94,11 +97,15 @@ namespace LicenseManager.Web.Providers
             return Task.FromResult<object>(null);
         }
 
-        public static AuthenticationProperties CreateProperties(string userName)
+        public static AuthenticationProperties CreateProperties(string userName, ICollection<IdentityUserRole> availableRoles)
         {
+            var roleList = availableRoles.Aggregate("", (current, role) => current + (role.Role.Name + ","));
+            roleList = roleList.TrimEnd(Convert.ToChar(","));
+            roleList = String.IsNullOrEmpty(roleList) ? "user" : roleList;
             IDictionary<string, string> data = new Dictionary<string, string>
             {
-                { "userName", userName }
+                { "userName", userName },
+                { "roles", roleList }
             };
             return new AuthenticationProperties(data);
         }
