@@ -12,6 +12,9 @@ namespace LicenseManager.Web
     {
         public void Configuration(IAppBuilder app)
         {
+            //AppDomain.CurrentDomain.SetData("DataDirectory", System.IO.Directory.GetCurrentDirectory() + @"\App_Data\");
+            //Console.WriteLine(AppDomain.CurrentDomain.GetData("DataDirectory"));
+            //AppDomain.CurrentDomain.SetData("DataDirectory", Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData));
             ConfigureAuth(app);
         }
     }

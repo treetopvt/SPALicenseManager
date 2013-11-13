@@ -3,9 +3,9 @@
 
     var serviceId = 'datacontext';
     angular.module('app').factory(serviceId,
-        ['common', datacontext]);
+        ['common', 'entityManagerFactory', datacontext]);
 
-    function datacontext(common) {
+    function datacontext(common, emFactory) {
         var $q = common.$q;
 
         var service = {

@@ -17,20 +17,24 @@ namespace LicenseManager.DataAccess
         /// default constructor will use the development SDF Database
         /// </summary>
         public LicenseManagerDbContext()
-           // : base("DefaultConnection") { }
-            : base("developmentDB"){}
+            : base("DefaultConnection")
+        {
+           // Database.SetInitializer(new MigrateDatabaseToLatestVersion<LicenseManagerDbContext, Configuration>());   
+
+        }
+            //: base("developmentDB"){}
 
         //called as a static constructor which will configure that database
         static LicenseManagerDbContext()
         {
-            //
-            Database.SetInitializer(new MigrateDatabaseToLatestVersion<LicenseManagerDbContext, Configuration>());   
+            Database.SetInitializer<LicenseManagerDbContext>(null);
+            //Database.SetInitializer(new MigrateDatabaseToLatestVersion<LicenseManagerDbContext, Configuration>());   
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             // Use singular table names
-            modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
 
             // Disable proxy creation and lazy loading; not wanted in this service context.
             //Configuration.ProxyCreationEnabled = false;

@@ -62,9 +62,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="LicenseManagerDbContext.cs" />
-    <Compile Include="Migrations\201311112206266_Init.cs" />
-    <Compile Include="Migrations\201311112206266_Init.Designer.cs">
-      <DependentUpon>201311112206266_Init.cs</DependentUpon>
+    <Compile Include="Migrations\201311130148069_Initial.cs" />
+    <Compile Include="Migrations\201311130148069_Initial.Designer.cs">
+      <DependentUpon>201311130148069_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -83,8 +83,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201311112206266_Init.resx">
-      <DependentUpon>201311112206266_Init.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201311130148069_Initial.resx">
+      <DependentUpon>201311130148069_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

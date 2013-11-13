@@ -20,7 +20,7 @@
     function getRoutes() {
         return [
             {
-                url: '/',
+                url: '/dashboard',
                 config: {
                     templateUrl: 'app/dashboard/dashboard.html',
                     title: 'dashboard',
@@ -37,6 +37,14 @@
                     settings: {
                         nav: 2,
                         content: '<i class="icon-lock"></i> Admin'
+                    }
+                }
+            }, {
+                url: '/',
+                config: {
+                    title: 'Login',
+                    templateUrl: 'app/login/login.html',
+                    settings: {
                     }
                 }
             }

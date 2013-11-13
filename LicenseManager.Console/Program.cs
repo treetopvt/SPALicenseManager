@@ -11,9 +11,11 @@ namespace LicenseManager.Console
     {
         static void Main(string[] args)
         {
+
             using (var ctx = new LicenseManagerDbContext())
             {
                 ctx.Database.CreateIfNotExists();
+                var users = ctx.Users.Count();
             }
         }
     }

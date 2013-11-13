@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using LicenseManager.DataAccess;
 using LicenseManager.DataModel;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -18,10 +19,13 @@ namespace LicenseManager.Web
         {
             PublicClientId = "self";
 
-            UserManagerFactory = () => new UserManager<ApplicationUser>(new UserStore<ApplicationUser>());
+            //http://stackoverflow.com/questions/18297052/asp-net-identity-how-to-set-target-db
+            //UserManagerFactory = () => new UserManager<ApplicationUser>(new UserStore<ApplicationUser>());
+            UserManagerFactory = () => new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new LicenseManagerDbContext()));
 
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
+                
                 TokenEndpointPath = new PathString("/Token"),
                 Provider = new ApplicationOAuthProvider(PublicClientId, UserManagerFactory),
                 AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
@@ -41,7 +45,15 @@ namespace LicenseManager.Web
         {
             // Enable the application to use a cookie to store information for the signed in user
             // and to use a cookie to temporarily store information about a user logging in with a third party login provider
+
             app.UseCookieAuthentication(new CookieAuthenticationOptions());
+            //app.UseCookieAuthentication(new CookieAuthenticationOptions
+            //{
+            //    AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
+            //    LoginPath = new PathString("/api/Account/Login")
+            //});
+
+            app.UseExternalSignInCookie();
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enable the application to use bearer tokens to authenticate users

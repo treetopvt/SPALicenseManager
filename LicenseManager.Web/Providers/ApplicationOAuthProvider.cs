@@ -37,6 +37,8 @@ namespace LicenseManager.Web.Providers
         {
             using (UserManager<ApplicationUser> userManager = _userManagerFactory())
             {
+                var tmp = userManager.FindByName("User1");
+                var t2 = userManager.GetLogins(tmp.UserName);
                 ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
 
                 if (user == null)

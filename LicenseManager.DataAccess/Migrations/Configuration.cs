@@ -25,7 +25,7 @@ namespace LicenseManager.DataAccess.Migrations
                 {
             var manager = new UserManager<ApplicationUser>(
                  new UserStore<ApplicationUser>(
-                     new LicenseManagerDbContext()));
+                    context));
 
             // Create 4 test users:
             for (int i = 0; i < 4; i++)
@@ -36,7 +36,8 @@ namespace LicenseManager.DataAccess.Migrations
                     FirstName = string.Format("Test {0}", i.ToString()),
                     LastName = string.Format("User {0}", i.ToString())
                 };
-                manager.Create(user, string.Format("Password{0}", i.ToString()));
+                var result =manager.Create(user, string.Format("Password{0}", i.ToString()));
+
             }
 
                 }
