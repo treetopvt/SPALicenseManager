@@ -38,6 +38,8 @@
             // generic
             activateController: activateController,
             createSearchThrottle: createSearchThrottle,
+            showLogonScreen: showLogonScreen,
+            hideLogonScreen:hideLogonScreen,
             debouncedThrottle: debouncedThrottle,
             isNumber: isNumber,
             logger: logger, // for accessibility
@@ -52,7 +54,15 @@
                 $broadcast(commonConfig.config.controllerActivateSuccessEvent, data);
             });
         }
-
+        function showLogonScreen(show) {
+            var data = { show: true };
+            $broadcast(commonConfig.config.showLogonScreen, data);
+        }
+        function hideLogonScreen(show) {
+            var data = { show: false };
+            $broadcast(commonConfig.config.hideLogonScreen, data);
+        }
+        
         function $broadcast() {
             return $rootScope.$broadcast.apply($rootScope, arguments);
         }

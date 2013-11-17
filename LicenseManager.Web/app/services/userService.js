@@ -8,9 +8,9 @@
     // Inject the dependencies. 
     // Point to the factory definition function.
     // TODO: replace app with your module name
-    angular.module('app').factory(serviceId, ['$http', '$cookieStore', userService]);
+    angular.module('app').factory(serviceId, ['$http', '$cookieStore', '$q', userService]);
 
-    function userService($http, $cookieStore, config) {
+    function userService($http, $cookieStore, $q, config) {
         
         // Define the functions and properties to reveal.
         var service = {
@@ -61,29 +61,35 @@
             this.rememberMe = rememberme;
         }
 
-        function login(user, success, error) {
+        function login(user) {
 
             var data = {
                 grant_type: "password",
                 username: user.userName,
                 password: user.password
             };
+
+            var deferred = $q.defer();//promise library
             $.ajax(loginUrl, {
                 type: "POST",
                 data: data
             }).success(function (data, status, headers, config) {
-                if (data.userName !=null && data.access_token !=null) {
+                if (data.userName != null && data.access_token != null) {
                     //this.userName = data.userName;
                     changeUser(data);
                     svc.isLoggedOn = true;
                     svc.accessToken = data.access_token;
-                    success(svc.currentUser);
+                    deferred.resolve(svc.currentUser);
+
                 } else {
                     //login failed
                     this.isLoggedOn = false;
                     this.userName = '';
-                    error({});
+                    status = 'Login failed, username or access_token were not valid';
+                    deferred.reject(status);
+
                 }
+
                 // data contains the response
                 // status is the HTTP status
                 // headers is the header getter function
@@ -92,8 +98,14 @@
                 //login failed
                 this.isLoggedOn = false;
                 this.userName = '';
-                error(data);
+                deferred.reject(status);
             });
+            
+
+            //must return the PROMISE!
+            return deferred.promise; //DON"T FORGET PROMISE PROPERTY!
+
+
             //$http({
             //    url: loginUrl,
             //    method: "POST",
@@ -133,6 +145,7 @@
 
         function changeUser(user) {
             _.extend(currentUser, user);
+            $cookieStore.put('user', currentUser);
         };
         
         function _getRoles(roleArrayString) {

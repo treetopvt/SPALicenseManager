@@ -17,7 +17,11 @@
     ]);
     
     // Handle routing errors and success events
-    app.run(['$route',  function ($route) {
-            // Include $route to kick start the router.
-        }]);        
+    //convention, put all angular dependencies first, then follow them with all app related dependencies (ie: datacontext)
+    app.run(['$route', '$rootScope', '$q', 'routemediator',
+    function ($route, $rootScope, $q, routemediator) {
+        // Include $route to kick start the router.
+        breeze.core.extendQ($rootScope, $q); //translation of promises from breeze to angular, need to add dependencies in app.run function
+        routemediator.setRoutingHandlers();
+    }]);
 })();

@@ -6,8 +6,8 @@
     // Collect the routes
     app.constant('routes', getRoutes());
     // Configure the routes and route resolvers
-    app.config(['$routeProvider', 'routes', routeConfigurator]);
-    function routeConfigurator($routeProvider, routes) {
+    app.config(['$routeProvider','$locationProvider', 'routes', routeConfigurator]);
+    function routeConfigurator($routeProvider,$locationProvider, routes) {
 
         //function (r) {
         //    $routeProvider.when(r.url, r.config);
@@ -17,8 +17,11 @@
             //$routeProvider.when(r.url, r.config);
             setRoute(r.url, r.config);
         });
-        $routeProvider.otherwise({ redirectTo: '/' });
+        //$routeProvider.otherwise({ redirectTo: '/' });
         
+        //when following line is set to true, no #'s are needed in the URL, but you need to set up server side redirects
+        //so if someone tries to deep navigate before the page is loaded, then the server should redirect to index.html (page that hosts the SPA)
+               // $locationProvider.html5Mode(true);
 
         //sets the resolvers for all the routes
         //by extending any existing resolvers (or creating a new one)
@@ -38,7 +41,6 @@
 
 
     // Define the routes 
-    //getRoutes.$inject = ['config'];
     function getRoutes() {
         
         var access = routingConfig.accessLevels;
@@ -48,26 +50,26 @@
                 url: '/dashboard',
                 config: {
                     templateUrl: 'app/dashboard/dashboard.html',
-                    access: access.user,
+                   // access: access.user,
                     title: 'dashboard',
                     settings: {
                         nav: 1,
-                        content: '<i class="fa fa-dashboard"></i> Dashboard'
+                        content: '<i class="glyphicon glyphicon-dashboard"></i> Dashboard'
                     }
                 }
             }, {
                 url: '/admin',
                 config: {
                     title: 'admin',
-                    access: access.admin,
+                   // access: access.admin,
                     templateUrl: 'app/admin/admin.html',
                     settings: {
                         nav: 2,
-                        content: '<i class="icon-lock"></i> Admin'
+                        content: '<i class="glyphicon glyphicon-lock"></i> Admin'
                     }
                 }
             }, {
-                url: '/',
+                url: '/Login',
                 config: {
                     access: access.anon,
                     title: 'Login',

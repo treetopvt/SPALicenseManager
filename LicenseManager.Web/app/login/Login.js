@@ -39,23 +39,27 @@
         }
 
         //#region Internal Methods        
-        function submit() {
+        function submit(user, loginForm) {
+            if (loginForm.$valid) {
+                
+                //switched from callbacks to promises.  Little bit more readable.
+                var response = userService.login({
+                    userName: vm.userName,
+                    password: vm.password,
+                    rememberMe: vm.rememberMe
+                });
+               // console.log(response);
+                response.then(function (user) {
+                    common.hideLogonScreen(false);
+                    //authorize and redirect
+                   // var route = '/dashboard';
+                   // $location.url(route); //location service that angular provides
+                }, function(status) {
+                    logError('User was not Authorized', status);
+                });
 
-            userService.login({
-                userName: vm.userName,
-                password: vm.password,
-                rememberMe: vm.rememberMe
-            }, 
-            function(success) {
-                //authorize and redirect
-                var route = '/dashboard';
-                $location.path(route); //location service that angular provides
 
-            },
-            function(error) {
-                logError('User was not Authorized', error);
-            });
-
+            }
         }
         function reset() {
             vm.username = "";

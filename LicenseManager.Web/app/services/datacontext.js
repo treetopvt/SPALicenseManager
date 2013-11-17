@@ -10,7 +10,10 @@
 
         var service = {
             getPeople: getPeople,
-            getMessageCount: getMessageCount
+            getMessageCount: getMessageCount,
+            getCustomers: getCustomers,
+            getLicensesForOrganization: getLicensesForOrganization,
+            getLicenseRequests:getLicenseRequests
         };
 
         return service;
@@ -29,5 +32,29 @@
             ];
             return $q.when(people);
         }
+
+        function getCustomers(){
+            var customers=[
+                {firstName:'Tom', lastName:'Bull', address:'25 Osprey Ln', organization:{Id:0, Name:'DGI'}}
+            ];
+            return $q.when(customers);
+        }
+
+        function getLicensesForOrganization(organization) {
+            if (organization) {
+                var licenses = [
+                    {
+                        id: 0, licenseKey: '33XCMHJI2EJ1633600U720DJMRA78X', machineCode: 'GDFED', dateIssued: Date.now(),
+                        issuedBy: { id: 0, firstName: 'Tom', lastName: 'Bull', address: '25 Osprey Ln', organization: { Id: 0, Name: 'DGI' } }
+                    }
+                ];
+                return $q.when(licenses);
+            }
+            return $q.when({});
+        }
+        function getLicenseRequests() {
+            return $q.when({});
+        }
+
     }
 })();

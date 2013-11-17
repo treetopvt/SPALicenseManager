@@ -173,9 +173,9 @@ small {
     margin: auto;
 }
 
-.navbar .brand {
+.navbar-brand {
     background: url(/content/images/icon.png) no-repeat left center !important;
-    margin-left: -6px;
+    margin-left: 10px;
 }
 
 .navbar .brand-title {
