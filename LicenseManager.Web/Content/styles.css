@@ -533,3 +533,11 @@ a {
 }
 
 /*#endregion */
+.img-list-icon{
+    height:65px;
+    padding-right:2px;
+}
+
+.padd-right{
+    padding-right:15px;
+}

@@ -45,7 +45,13 @@
                 var licenses = [
                     {
                         id: 0, licenseKey: '33XCMHJI2EJ1633600U720DJMRA78X', machineCode: 'GDFED', dateIssued: Date.now(),
-                        issuedBy: { id: 0, firstName: 'Tom', lastName: 'Bull', address: '25 Osprey Ln', organization: { Id: 0, Name: 'DGI' } }
+                        issuedBy: {
+                            id: 0, firstName: 'Tom', lastName: 'Bull', address: '25 Osprey Ln', organization: { Id: 0, Name: 'DGI' }
+                        },
+                        requestedBy: {
+                            firstName: 'John', lastName: 'Papa'
+                        }
+
                     }
                 ];
                 return $q.when(licenses);

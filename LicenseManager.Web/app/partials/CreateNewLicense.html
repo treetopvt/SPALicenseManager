@@ -1,11 +1,45 @@
-﻿<div class="mainbar">
-    <div>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="widget wblue">
-                    <div class="widget-head">
-                        <i class="glyphicon glyphicon-qrcode"/>
-                        <label class="jumbotron"> Generate License</label>
+﻿<div class="mainbar" data-ng-controller="licenseController as vm">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget wblue">
+                <!-- cc-widget-header is defined in servies/directives.js  It is a directive -->
+                <div><span class="badge badge-warning pull-right">{{vm.newLicenses}}</span></div><div data-cc-widget-header title="{{vm.title}}"></div>
+                <div class="widget-content">
+
+                    <div class="row">
+                        <div class="navbar-header">
+                            <button type="button" class="btn btn-default navbar-btn navbar-right"><i class="glyphicon glyphicon-fire"></i>Generate New License</button>
+                            <span class="badge badge-warning navbar-right">{{vm.newLicenses}}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div data-ng-repeat=" license in vm.licenses">
+                            <div class="well">
+                                <div class="row">
+                                    <div class="pull-left">
+                                        <img src="../../Content/images/license.png"
+                                             class="img-list-icon pull-left hidden-xs hidden-sm" />
+                                        <small>License Key: {{license.licenseKey}}</small><br />
+                                        <small>Machine Code: {{license.machineCode}}</small><br />
+                                        <small>Requested By: <a href="#">{{license.requestedBy.firstName}}</a></small>
+                                    </div>
+                                    <div class="pull-right padd-right">
+                                        <ul class="nav nav-stacked nav-pills">
+                                            <li>
+                                                <button class="btn btn-primary btn-block" data-ng-click="vm.generateLicenseKey(license)">
+                                                    <i class="glyphicon glyphicon-fire"></i>Generate License
+                                                </button>
+                                            </li>
+                                            <li>
+                                                <button class="btn btn-warning btn-block" data-ng-click="vm.destroyLicense(license)">
+                                                    <i class="glyphicon glyphicon-trash"></i>Destroy License
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

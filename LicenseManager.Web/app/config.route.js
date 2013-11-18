@@ -77,7 +77,17 @@
                     settings: {
                     }
                 }
+            }, {
+                url: '/CreateLicense',
+                config: {
+                    access: access.user,
+                    title: 'Generate License',
+                    templateUrl: 'app/partials/CreateNewLicense.html',
+                    settings: {
+                    }
+                }
             }
+
         ];
     }
 })();
