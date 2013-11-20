@@ -78,16 +78,30 @@
                     }
                 }
             }, {
-                url: '/CreateLicense',
+                url: '/Licenses',
                 config: {
                     access: access.user,
-                    title: 'Generate License',
-                    templateUrl: 'app/partials/CreateNewLicense.html',
+                    title: 'licenses',
+                    templateUrl: 'app/views/licenses.html',
                     settings: {
+                        nav: 3,
+                        content: '<i class="glyphicon glyphicon-qrcode"></i> License Management'
+
+                    }
+                }
+            }, {
+                url: '/Customers',
+                config: {
+                    access: access.public,
+                    title: 'customer',
+                    templateUrl: 'app/views/customers.html',
+                    settings: {
+                        nav: 3,
+                        content: '<i class="fa fa-group"></i> Customer Management'
+
                     }
                 }
             }
-
         ];
     }
 })();
