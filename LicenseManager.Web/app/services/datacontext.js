@@ -22,7 +22,7 @@
 
         function getPeople() {
             var people = [
-                { firstName: 'John', lastName: 'Papa', age: 25, location: 'Florida' },
+                {id:0, firstName: 'John', lastName: 'Papa', age: 25, location: 'Florida' },
                 { firstName: 'Ward', lastName: 'Bell', age: 31, location: 'California' },
                 { firstName: 'Colleen', lastName: 'Jones', age: 21, location: 'New York' },
                 { firstName: 'Madelyn', lastName: 'Green', age: 18, location: 'North Dakota' },
@@ -49,7 +49,7 @@
                             id: 0, firstName: 'Tom', lastName: 'Bull', address: '25 Osprey Ln', organization: { Id: 0, Name: 'DGI' }
                         },
                         requestedBy: {
-                            firstName: 'John', lastName: 'Papa'
+                            id:0, firstName: 'John', lastName: 'Papa'
                         }
 
                     }

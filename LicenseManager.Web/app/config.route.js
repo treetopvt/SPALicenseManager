@@ -101,6 +101,13 @@
 
                     }
                 }
+            }, {
+                url: '/ShowCustomer/:customerId',
+                config: {
+                    access: access.public,
+                    title: 'View Customer',
+                    templateUrl: 'app/views/show_Customer.html',
+                 }
             }
         ];
     }
