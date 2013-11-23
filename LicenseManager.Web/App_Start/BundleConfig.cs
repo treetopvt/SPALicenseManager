@@ -22,6 +22,7 @@ namespace LicenseManager.Web
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      //"~/Content/bootstrap-select.css",
                       "~/Content/site.css"));
         }
     }

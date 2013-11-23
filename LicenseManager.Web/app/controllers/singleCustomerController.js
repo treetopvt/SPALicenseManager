@@ -22,15 +22,30 @@
         vm.activate = activate;
         vm.title = 'Edit Customer';//could be View as well
 
-        vm.saveCustomer = saveCustomer;
+        vm.EditButtonText = 'Edit Customer';
+        vm.updateStatus = false;
 
+        vm.saveCustomer = saveCustomer;
+        vm.deleteCustomer = deleteCustomer;
+        vm.changeCustomerEdit = changeCustomerEdit;
+
+        vm.isEditing = false;
+        vm.errorMessage = '';
         vm.Customer = {
             firstName: 'TEST',
             lastName: 'USER',
             id:$routeParams.customerId
         };
 
-
+        vm.organizations = [{
+            "id": "1",
+            "name": "<i class=\"glyphicon glyphicon-thumbs-up\"></i>&nbsp;ANG"
+        },
+            {
+                "id": "2",
+                "name": "<i class=\"glyphicon glyphicon-star\"></i>&nbsp;Alexandria"
+            }
+        ]
         activate();
 
         function activate() {
@@ -40,9 +55,23 @@
         }
 
         function saveCustomer() {
-            alert('Save Customer');
+            vm.updateStatus = true;
+            vm.isEditing = false;
         }
 
+        function deleteCustomer() {
+            vm.errorMessage = 'Please do not delete this customer';
+        }
+
+        function changeCustomerEdit(isEditing)
+        {
+            vm.isEditing = isEditing;
+            if (isEditing) {
+                vm.EditButtonText = 'Cancel Editing';
+            } else {
+                vm.EditButtonText = 'Edit Customer';
+            }
+        }
         //#region Internal Methods        
 
         //#endregion

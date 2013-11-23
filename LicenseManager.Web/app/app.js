@@ -13,7 +13,8 @@
         'common.bootstrap', // bootstrap dialog wrapper functions
 
         // 3rd Party Modules
-        'ui.bootstrap'      // ui-bootstrap (ex: carousel, pagination, dialog)
+        'ui.bootstrap',      // ui-bootstrap (ex: carousel, pagination, dialog)
+        '$strap.directives'
     ]);
     
     // Handle routing errors and success events
