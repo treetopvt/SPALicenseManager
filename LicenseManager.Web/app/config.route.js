@@ -102,7 +102,7 @@
                     }
                 }
             }, {
-                url: '/ShowCustomer/:customerId',
+                url: '/Customers/:customerId',
                 config: {
                     access: access.public,
                     title: 'View Customer',

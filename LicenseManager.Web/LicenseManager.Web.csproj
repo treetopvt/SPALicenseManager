@@ -277,8 +277,10 @@
     <Content Include="Content\ie10mobile.css" />
     <Content Include="Content\images\AngularJS-small.png" />
     <Content Include="Content\images\breezelogo.png" />
+    <Content Include="Content\images\female_user.png" />
     <Content Include="Content\images\icon.png" />
     <Content Include="Content\images\license.png" />
+    <Content Include="Content\images\male_user.png" />
     <Content Include="Content\styles.css" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />

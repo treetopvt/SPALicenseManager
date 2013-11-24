@@ -8,9 +8,9 @@
     // Inject the dependencies. 
     // Point to the controller definition function.
     angular.module('app').controller(controllerId,
-        ['$routeParams', 'common', singleCustomerController]);
+        ['$routeParams', 'common', 'datacontext',singleCustomerController]);
 
-    function singleCustomerController($routeParams, common) {
+    function singleCustomerController($routeParams, common, datacontext) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
         var vm = this;
 
@@ -20,7 +20,7 @@
 
         // Bindable properties and functions are placed on vm.
         vm.activate = activate;
-        vm.title = 'Edit Customer';//could be View as well
+        vm.title = 'View Customer';//could be View as well
 
         vm.EditButtonText = 'Edit Customer';
         vm.updateStatus = false;
@@ -56,11 +56,18 @@
 
         function saveCustomer() {
             vm.updateStatus = true;
-            vm.isEditing = false;
+            if (!vm.Customer.id || vm.Customer.id < 0 ) {
+                datacontext.insertCustomer(vm.Customer).then(processSuccess, processError);
+            }
+            else {
+                datacontext.updateCustomer(vm.Customer).then(processSuccess, processError);
+            }
+            changeCustomerEdit(false);
         }
 
         function deleteCustomer() {
             vm.errorMessage = 'Please do not delete this customer';
+            changeCustomerEdit(false);
         }
 
         function changeCustomerEdit(isEditing)
@@ -68,12 +75,22 @@
             vm.isEditing = isEditing;
             if (isEditing) {
                 vm.EditButtonText = 'Cancel Editing';
+                vm.title = 'Edit Customer';
             } else {
                 vm.EditButtonText = 'Edit Customer';
+                vm.title = 'View Customer';
             }
         }
-        //#region Internal Methods        
 
+        //#region Internal Methods        
+        function processSuccess() {
+            console.log('Successful save of customer');
+        }
+
+        function processError(error) {
+            vm.errorMessage = 'Error encountered with save: ' + error;
+
+        }
         //#endregion
     }
 })();

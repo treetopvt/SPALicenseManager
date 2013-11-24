@@ -1,12 +1,40 @@
-﻿<div data-ng-controller="customer as vm">
+﻿<div class="mainbar" data-ng-controller="customer as vm">
     <div class="matter">
         <div class="widget">
             <div class="wheader wviolet">
-                Customers
+                <span><i class="fa fa-2x fa-users"></i> Customers</span>
             </div>
-            <div class="wcontent">
+            <div class="wcontent padd">
                 <div data-ng-repeat="customer in vm.customers">
                     <!-- will need to filter based on organization some how -->
+                    <div class="well well-sm">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <!-- image -->
+                                <!-- !customer.sex ||  -->
+                                <img class="img-list-icon" data-ng-if="!customer.sex || customer.sex == 'male'" src="..\..\content\images\male_user.png" />
+                                <img class="img-list-icon" data-ng-if="customer.sex == 'female'" src="..\..\content\images\female_user.png" />
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-12"><span class="lead">{{customer.firstName}} {{customer.lastName}}</span></div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-6"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <!-- action buttons -->
+                                <div class="btn-group-vertical">
+                                    <ul class="list-unstyled">
+                                        <li><button class="btn btn-primary btn-block"><i class="glyphicon glyphicon-edit"/> Edit</button></li>
+                                        <li><button class="btn btn-default btn-block"><i class="glyphicon glyphicon-user" /> View</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

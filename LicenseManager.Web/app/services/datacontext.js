@@ -13,7 +13,10 @@
             getMessageCount: getMessageCount,
             getCustomers: getCustomers,
             getLicensesForOrganization: getLicensesForOrganization,
-            getLicenseRequests:getLicenseRequests
+            getLicenseRequests: getLicenseRequests,
+            insertCustomer: insertCustomer,
+            updateCustomer: updateCustomer,
+            getCustomersForOrganization: getCustomersForOrganization
         };
 
         return service;
@@ -62,5 +65,31 @@
             return $q.when({});
         }
 
+
+        //#region "Customers"
+        function insertCustomer(newCustomer) {
+            var results = { success: true };
+            return $q.when(results);
+        }
+
+        function updateCustomer(customer) {
+            return $q.when(customer);
+        }
+
+        function getCustomersForOrganization(organization)
+        {
+            if (organization) {
+                var customers=[
+                    {id:0, firstName:'Chris', lastName:'Matthews', address:'25 Pennsylvania Ave', sex:'male', organization:{Id:0, Name:'ABCD'}},
+                    {id:1, firstName:'Anna', lastName:'Adams', address:'1234 Homes Ln', sex:'female', organization:{Id:0, Name:'ABCD'}},
+                    {id:2, firstName:'Dan', lastName:'Draper', address:'Denver, Colorado', sex:'male', organization:{Id:1, Name:'Private'}},
+                    {id:3, title:'Chief', firstName:'Chris', lastName:'Tucker', address:'Andrews, Md', sex:'male', organization:{Id:2, Name:'ANGA'}}
+                ];
+            return $q.when(customers);
+            }
+            return $q.when({});
+        }
+
+        //#endregion
     }
 })();

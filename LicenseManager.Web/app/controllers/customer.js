@@ -8,9 +8,9 @@
     // Inject the dependencies. 
     // Point to the controller definition function.
     angular.module('app').controller(controllerId,
-        ['$scope', 'common', customer]);
+        ['$scope', 'common', 'datacontext', customer]);
 
-    function customer($scope, common) {
+    function customer($scope, common, datacontext) {
         // Using 'Controller As' syntax, so we assign this to the vm variable (for viewmodel).
         var vm = this;
 
@@ -26,13 +26,18 @@
         activate();
 
         function activate() {
+            getCustomers('all');
             common.activateController(controllerId)
                 .then(function () { log('Activated Customers View'); });
 
         }
 
         //#region Internal Methods        
-
+        function getCustomers(organization) {
+            datacontext.getCustomersForOrganization(organization).then(function (data) {
+                vm.customers = data;
+            });
+        }
         //#endregion
     }
 })();
